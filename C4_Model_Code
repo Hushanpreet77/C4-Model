@@ -1,0 +1,46 @@
+workspace {
+   
+     model {
+     
+        user = person "User"
+        
+             
+            apiGateway = softwareSystem "API Gateway" {
+               user -> this "Uses"
+               //Specify that the gateway forwards requests to the web app
+               this -> softwareSystem "forwards requests to"
+               softwareSystem -> this "Sends responses to"
+            }
+            
+        
+        SoftwareSystem = softwareSystem "conference System"{
+            
+            // Define the database container
+            database = container "Database" {
+             // Define a relationship    
+            }
+            
+            //Define the web application container 
+            webapp = container "web application" {
+                this -> database "Reads from and writes to"
+                database -> this "Sends data to and receive data from"
+            }
+       
+        }
+     
+    }
+  
+    views {
+        systemContext softwareSystem {
+            include *
+            autolayout lr
+        }
+        
+        container softwareSystem {
+            include *
+            autolayout lr
+        }
+        
+        theme default
+    }
+}
